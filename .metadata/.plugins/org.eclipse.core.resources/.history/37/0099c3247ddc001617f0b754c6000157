@@ -1,0 +1,68 @@
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
+
+public class MainWindow extends JPanel{
+	private JFrame mainFrame;
+	private JPanel mainPanel;
+	private JButton nextButton = new JButton("Next");;
+	private JFileChooser fc;
+	private static String imageFilePath;
+
+	public MainWindow() {
+		mainFrame = new JFrame("Image Editor");
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setSize(800, 600);
+		mainFrame.setLocationRelativeTo(null);
+	    mainFrame.setLayout(new FlowLayout());
+		mainPanel = new JPanel(new GridLayout(70, 50));
+		mainFrame.add(mainPanel);	
+		showSelectFileWindow();
+		
+		mainPanel.setVisible(true);
+		mainFrame.setVisible(true);
+	}
+	
+	private void showSelectFileWindow(){
+//		mainPanel.removeAll();
+		
+		fc = new JFileChooser();
+		fc.setSize(100, 500);
+		fc.setAcceptAllFileFilterUsed(false);
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//		fc.addChoosableFileFilter(new FileFilter() {
+//			public String getDescription() {
+//		        return "Text Documents (*.txt)";
+//		    } 
+//		    public boolean accept(File f) {
+//		        if (f.isDirectory()) {
+//		            return true;
+//		        } else {
+//		            return f.getName().toLowerCase().endsWith(".txt");
+//		        }
+//		    }
+//		});
+		
+		fc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				JFileChooser theFileChooser = (JFileChooser) actionEvent.getSource();
+		        String command = actionEvent.getActionCommand();
+		        //write changes before opening file to prevent file mismatch
+		        if (command.equals(JFileChooser.APPROVE_SELECTION)) { 
+		        	imageFile = theFileChooser.getSelectedFile();
+		        	System.out.println(imageFile.getAbsolutePath());
+		        }
+			}
+		});
+		mainPanel.add(fc);
+		fc.setVisible(true);
+	}
+}

@@ -77,10 +77,11 @@ public class MainWindow extends JPanel{
 		chooseFilePanel.setVisible(false);
 		try {
 	         BufferedImage img = ImageIO.read(new File(imageFilePath));
+	         img = ImageUtility.makeGrayScale(img);
 	         ImageIcon icon = new ImageIcon(img);
 	         JLabel label = new JLabel(icon);
 	         label.setAutoscrolls(true);
-	         JOptionPane.showMessageDialog(null, label);
+	         JOptionPane.showMessageDialog(null, label,"Original Image", JOptionPane.PLAIN_MESSAGE);
 	      } catch (IOException e) {
 	         e.printStackTrace();
 	    }

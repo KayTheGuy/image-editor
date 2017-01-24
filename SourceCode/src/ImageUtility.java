@@ -8,6 +8,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class ImageUtility {
 	
+	//Returns the grayscale of the original image
 	public static BufferedImage makeGrayScale(BufferedImage image) {
 		int width = image.getWidth();
         int height = image.getHeight();
@@ -26,6 +27,10 @@ public class ImageUtility {
         return image;
 	}
 	
+
+	// makes a histogram of the grayscale of the image
+	// Returns an image of the histogram
+	// Warning: for color images the histogram will only show the blue
 	public static BufferedImage makeGrayscaleHistogram(BufferedImage image) {
 		XYSeries xySeries = new XYSeries("Grayscale Histogram");
 		
@@ -50,5 +55,24 @@ public class ImageUtility {
 		JFreeChart histogram = ChartFactory.createXYLineChart("Grayscale Histogram", "Gray Value", "Frequency [# of pixels]", data);
 
 		return histogram.createBufferedImage(700,400);
+	}
+	
+	// Returns the gamma corrected version of the image
+	public static BufferedImage applyGammaCorrection(BufferedImage image)  {
+		int width = image.getWidth();
+        int height = image.getHeight();
+        double gamme_inversed = 1/2.0;
+        for(int y=0; y<height; y++){
+           for(int x=0; x<width; x++){
+              Color c = new Color(image.getRGB(x, y));
+              int red = (int) (255 * (Math.pow((double) c.getRed() / (double) 255, gamme_inversed)));
+              int green = (int) (255 * (Math.pow((double) c.getGreen() / (double) 255, gamme_inversed)));
+              int blue = (int) (255 * (Math.pow((double) c.getBlue() / (double) 255, gamme_inversed)));
+              
+              Color newColor = new Color(red,green,blue);
+              image.setRGB(x,y,newColor.getRGB());
+           }
+        }
+		return image;
 	}
 }

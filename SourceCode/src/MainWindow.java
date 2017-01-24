@@ -74,18 +74,29 @@ public class MainWindow extends JPanel{
 	private void showColorImage() {
 		chooseFilePanel.setVisible(false);
 		try {
-	         BufferedImage img = ImageIO.read(new File(imageFilePath));
-	         img = ImageUtility.makeGrayScale(img);
-	         ImageIcon icon = new ImageIcon(img);
+			// STEP 1
+	         BufferedImage originalImg = ImageIO.read(new File(imageFilePath));
+	         BufferedImage grayimg = ImageUtility.makeGrayScale(originalImg);
+	         ImageIcon icon = new ImageIcon(grayimg);
 	         JLabel label = new JLabel(icon);
 	         label.setAutoscrolls(true);
 	         JOptionPane.showMessageDialog(null, label,"Original Image", JOptionPane.PLAIN_MESSAGE);
-	         
-	         BufferedImage chartImg = ImageUtility.makeGrayscaleHistogram(img);
-	         icon = new ImageIcon(chartImg);
+	        
+	         // STEP 2
+	         BufferedImage histogramImage = ImageUtility.makeGrayscaleHistogram(grayimg);
+	         icon = new ImageIcon(histogramImage);
 	         label = new JLabel(icon);
 	         label.setAutoscrolls(true);
 	         JOptionPane.showMessageDialog(null, label,"Histogram", JOptionPane.PLAIN_MESSAGE);
+	         
+	         // STEP 3
+	         BufferedImage gammaCorrected = ImageUtility.applyGammaCorrection(grayimg);
+	         BufferedImage gammaHistogramImage = ImageUtility.makeGrayscaleHistogram(gammaCorrected);
+	         icon = new ImageIcon(gammaHistogramImage);
+	         label = new JLabel(icon);
+	         label.setAutoscrolls(true);
+	         JOptionPane.showMessageDialog(null, label,"Gamma Corrected Version", JOptionPane.PLAIN_MESSAGE);
+	         
 	      } catch (IOException e) {
 	         e.printStackTrace();
 	    }

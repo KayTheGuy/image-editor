@@ -104,7 +104,7 @@ public class MainWindow extends JPanel{
 	         JOptionPane.showMessageDialog(null, label,"Gamma Corrected Histogram", JOptionPane.PLAIN_MESSAGE);
 	         
 	         // STEP 5
-	         BufferedImage invertImg = ImageUtility.invertImage(originalImg);
+	         BufferedImage invertImg = ImageUtility.invertImage(grayImg);
 	         icon = new ImageIcon(invertImg);
 	         label = new JLabel(icon);
 	         label.setAutoscrolls(true);

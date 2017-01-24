@@ -12,6 +12,7 @@ public class ImageUtility {
 	public static BufferedImage makeGrayScale(BufferedImage image) {
 		int width = image.getWidth();
         int height = image.getHeight();
+        BufferedImage resultImage = new BufferedImage(width, height, image.getType());
         
         for(int y=0; y<height; y++){
            for(int x=0; x<width; x++){
@@ -21,10 +22,10 @@ public class ImageUtility {
               int blue = (int)(c.getBlue() *0.114);
               Color newColor = new Color(red+green+blue,
               red+green+blue,red+green+blue);
-              image.setRGB(x,y,newColor.getRGB());
+              resultImage.setRGB(x,y,newColor.getRGB());
            }
         }
-        return image;
+        return resultImage;
 	}
 	
 
@@ -61,6 +62,7 @@ public class ImageUtility {
 	public static BufferedImage applyGammaCorrection(BufferedImage image)  {
 		int width = image.getWidth();
         int height = image.getHeight();
+        BufferedImage resultImage = new BufferedImage(width, height, image.getType());
         double gamme_inversed = 1/2.0;
         for(int y=0; y<height; y++){
            for(int x=0; x<width; x++){
@@ -70,9 +72,29 @@ public class ImageUtility {
               int blue = (int) (255 * (Math.pow((double) c.getBlue() / (double) 255, gamme_inversed)));
               
               Color newColor = new Color(red,green,blue);
-              image.setRGB(x,y,newColor.getRGB());
+              resultImage.setRGB(x,y,newColor.getRGB());
            }
         }
-		return image;
+		return resultImage;
+	}
+	
+	// invert the image
+	public static BufferedImage invertImage(BufferedImage image) {
+		int width = image.getWidth();
+        int height = image.getHeight();
+        BufferedImage resultImage = new BufferedImage(width, height, image.getType());
+        double gamme_inversed = 1/2.0;
+        for(int y=0; y<height; y++){
+           for(int x=0; x<width; x++){
+              Color c = new Color(image.getRGB(x, y));
+              int red = (int) (255-c.getRed());
+              int green = (int) (255-c.getGreen());
+              int blue = (int) (255-c.getBlue());
+              
+              Color newColor = new Color(red,green,blue);
+              resultImage.setRGB(x,y,newColor.getRGB());
+           }
+        }
+		return resultImage;
 	}
 }

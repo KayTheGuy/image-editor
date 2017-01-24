@@ -76,26 +76,45 @@ public class MainWindow extends JPanel{
 		try {
 			// STEP 1
 	         BufferedImage originalImg = ImageIO.read(new File(imageFilePath));
-	         BufferedImage grayimg = ImageUtility.makeGrayScale(originalImg);
-	         ImageIcon icon = new ImageIcon(grayimg);
+	         ImageIcon icon = new ImageIcon(originalImg);
 	         JLabel label = new JLabel(icon);
 	         label.setAutoscrolls(true);
 	         JOptionPane.showMessageDialog(null, label,"Original Image", JOptionPane.PLAIN_MESSAGE);
-	        
+	         
 	         // STEP 2
-	         BufferedImage histogramImage = ImageUtility.makeGrayscaleHistogram(grayimg);
+	         BufferedImage grayImg = ImageUtility.makeGrayScale(originalImg);
+	         icon = new ImageIcon(grayImg);
+	         label = new JLabel(icon);
+	         label.setAutoscrolls(true);
+	         JOptionPane.showMessageDialog(null, label,"Grayscale Image", JOptionPane.PLAIN_MESSAGE);
+	         
+	         // STEP 3
+	         BufferedImage histogramImage = ImageUtility.makeGrayscaleHistogram(grayImg);
 	         icon = new ImageIcon(histogramImage);
 	         label = new JLabel(icon);
 	         label.setAutoscrolls(true);
 	         JOptionPane.showMessageDialog(null, label,"Histogram", JOptionPane.PLAIN_MESSAGE);
 	         
-	         // STEP 3
-	         BufferedImage gammaCorrected = ImageUtility.applyGammaCorrection(grayimg);
+	         // STEP 4
+	         BufferedImage gammaCorrected = ImageUtility.applyGammaCorrection(grayImg);
 	         BufferedImage gammaHistogramImage = ImageUtility.makeGrayscaleHistogram(gammaCorrected);
 	         icon = new ImageIcon(gammaHistogramImage);
 	         label = new JLabel(icon);
 	         label.setAutoscrolls(true);
-	         JOptionPane.showMessageDialog(null, label,"Gamma Corrected Version", JOptionPane.PLAIN_MESSAGE);
+	         JOptionPane.showMessageDialog(null, label,"Gamma Corrected Histogram", JOptionPane.PLAIN_MESSAGE);
+	         
+	         // STEP 5
+	         BufferedImage invertImg = ImageUtility.invertImage(originalImg);
+	         icon = new ImageIcon(invertImg);
+	         label = new JLabel(icon);
+	         label.setAutoscrolls(true);
+	         JOptionPane.showMessageDialog(null, label,"Invert Image", JOptionPane.PLAIN_MESSAGE);
+	         
+	         BufferedImage invertHistogramImage = ImageUtility.makeGrayscaleHistogram(invertImg);
+	         icon = new ImageIcon(invertHistogramImage);
+	         label = new JLabel(icon);
+	         label.setAutoscrolls(true);
+	         JOptionPane.showMessageDialog(null, label,"Gamma Corrected Histogram", JOptionPane.PLAIN_MESSAGE);
 	         
 	      } catch (IOException e) {
 	         e.printStackTrace();

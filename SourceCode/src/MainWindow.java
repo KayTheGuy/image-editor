@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +7,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -82,11 +80,17 @@ public class MainWindow extends JPanel{
 	         JLabel label = new JLabel(icon);
 	         label.setAutoscrolls(true);
 	         JOptionPane.showMessageDialog(null, label,"Original Image", JOptionPane.PLAIN_MESSAGE);
+	         
+	         BufferedImage chartImg = ImageUtility.makeGrayscaleHistogram(img);
+	         icon = new ImageIcon(chartImg);
+	         label = new JLabel(icon);
+	         label.setAutoscrolls(true);
+	         JOptionPane.showMessageDialog(null, label,"Histogram", JOptionPane.PLAIN_MESSAGE);
 	      } catch (IOException e) {
 	         e.printStackTrace();
 	    }
-		JButton showGray = new JButton("Display grayscale");
-		showColorPanel.add(showGray);
-		showColorPanel.setVisible(true);
+//		JButton showGray = new JButton("Display grayscale");
+//		showColorPanel.add(showGray);
+//		showColorPanel.setVisible(true);
 	}
 }

@@ -57,13 +57,6 @@ public class ImageUtility {
 		histogramdataset.addSeries("Grayscale Histogram", histFreqdouble, 256);
 		JFreeChart histogram = ChartFactory.createHistogram("Histogram", "gray value", "frequency [# of pixels]", histogramdataset, PlotOrientation.VERTICAL, true, true, false);
 		return histogram.createBufferedImage(700,400);
-//        XYPlot xyplot = (XYPlot) jfreechart.getPlot();
-//        xyplot.setForegroundAlpha(0.85F);
-//        XYBarRenderer xybarrenderer = (XYBarRenderer) xyplot.getRenderer();
-//        xybarrenderer.setDrawBarOutline(false);
-//        JPanel jpanel = new ChartPanel(jfreechart);
-//        jpanel.setPreferredSize(new Dimension(1000, 600));
-//        setContentPane(jpanel);
 	}
 	
 	// Returns the gamma corrected version of the image
@@ -113,7 +106,7 @@ public class ImageUtility {
 		int[][] ditherMatrix = new int[n][n];
 		for(int i=0;i<n;i++) {
 			for(int j=0;j<n;j++) {
-				ditherMatrix[i][j] = random.nextInt(255);
+				ditherMatrix[i][j] = random.nextInt(250);
 			}
 		}
 		int width = image.getWidth();

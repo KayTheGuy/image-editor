@@ -20,7 +20,7 @@ public class MainWindow extends JPanel{
 	private static String imageFilePath;
 
 	public void startSteps() {
-		mainFrame = new JFrame("Image Editor");
+		mainFrame = new JFrame("CMPT365 Image Editing");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setSize(600, 600);
 		mainFrame.setLocationRelativeTo(null);
@@ -43,13 +43,13 @@ public class MainWindow extends JPanel{
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 //		fc.addChoosableFileFilter(new FileFilter() {
 //			public String getDescription() {
-//		        return "Text Documents (*.txt)";
+//		        return "IMAGE (*.JPEG)";
 //		    } 
 //		    public boolean accept(File f) {
 //		        if (f.isDirectory()) {
 //		            return true;
 //		        } else {
-//		            return f.getName().toLowerCase().endsWith(".txt");
+//		            return f.getName().toLowerCase().endsWith(".JPEG");
 //		        }
 //		    }
 //		});
@@ -76,51 +76,40 @@ public class MainWindow extends JPanel{
 		try {
 			// STEP 1
 	         BufferedImage originalImg = ImageIO.read(new File(imageFilePath));
-	         ImageIcon icon = new ImageIcon(originalImg);
-	         JLabel label = new JLabel(icon);
-	         label.setAutoscrolls(true);
-	         JOptionPane.showMessageDialog(null, label,"Original Image", JOptionPane.PLAIN_MESSAGE);
+	         viewImage(originalImg, "Original Image");
 	         
 	         // STEP 2
 	         BufferedImage grayImg = ImageUtility.makeGrayScale(originalImg);
-	         icon = new ImageIcon(grayImg);
-	         label = new JLabel(icon);
-	         label.setAutoscrolls(true);
-	         JOptionPane.showMessageDialog(null, label,"Grayscale Image", JOptionPane.PLAIN_MESSAGE);
+	         viewImage(grayImg, "Grayscale Image");
 	         
 	         // STEP 3
 	         BufferedImage histogramImage = ImageUtility.makeGrayscaleHistogram(grayImg);
-	         icon = new ImageIcon(histogramImage);
-	         label = new JLabel(icon);
-	         label.setAutoscrolls(true);
-	         JOptionPane.showMessageDialog(null, label,"Histogram", JOptionPane.PLAIN_MESSAGE);
+	         viewImage(histogramImage, "Grayscale Histogram");
 	         
 	         // STEP 4
 	         BufferedImage gammaCorrected = ImageUtility.applyGammaCorrection(grayImg);
 	         BufferedImage gammaHistogramImage = ImageUtility.makeGrayscaleHistogram(gammaCorrected);
-	         icon = new ImageIcon(gammaHistogramImage);
-	         label = new JLabel(icon);
-	         label.setAutoscrolls(true);
-	         JOptionPane.showMessageDialog(null, label,"Gamma Corrected Histogram", JOptionPane.PLAIN_MESSAGE);
+	         viewImage(gammaHistogramImage, "Gamma Corrected Histogram");
 	         
 	         // STEP 5
 	         BufferedImage invertImg = ImageUtility.invertImage(grayImg);
-	         icon = new ImageIcon(invertImg);
-	         label = new JLabel(icon);
-	         label.setAutoscrolls(true);
-	         JOptionPane.showMessageDialog(null, label,"Invert Image", JOptionPane.PLAIN_MESSAGE);
+	         viewImage(invertImg, "Inverted Image");
 	         
 	         BufferedImage invertHistogramImage = ImageUtility.makeGrayscaleHistogram(invertImg);
-	         icon = new ImageIcon(invertHistogramImage);
-	         label = new JLabel(icon);
-	         label.setAutoscrolls(true);
-	         JOptionPane.showMessageDialog(null, label,"Gamma Corrected Histogram", JOptionPane.PLAIN_MESSAGE);
+	         viewImage(invertHistogramImage, "Inverted Histogram");
 	         
+	         // STEP 6
+	         BufferedImage ditheredImg = ImageUtility.grayscalOrderedDither(grayImg);
+	         viewImage(ditheredImg, "Ordered-Dithered Image");	         
 	      } catch (IOException e) {
 	         e.printStackTrace();
 	    }
-//		JButton showGray = new JButton("Display grayscale");
-//		showColorPanel.add(showGray);
-//		showColorPanel.setVisible(true);
+	}
+	
+	private void viewImage(BufferedImage image, String header) {
+		ImageIcon icon = new ImageIcon(image);
+		JLabel label = new JLabel(icon);
+        label.setAutoscrolls(true);
+        JOptionPane.showMessageDialog(null, label,header, JOptionPane.PLAIN_MESSAGE);
 	}
 }

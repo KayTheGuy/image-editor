@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -54,7 +55,7 @@ public class ImageUtility {
 
 		HistogramDataset histogramdataset = new HistogramDataset();
 		histogramdataset.addSeries("Grayscale Histogram", histFreqdouble, 256);
-		JFreeChart histogram = ChartFactory.createHistogram("Histograms", "Gray Value", "Frequency [# of pixels]", histogramdataset, PlotOrientation.VERTICAL, true, true, false);
+		JFreeChart histogram = ChartFactory.createHistogram("Histogram", "gray value", "frequency [# of pixels]", histogramdataset, PlotOrientation.VERTICAL, true, true, false);
 		return histogram.createBufferedImage(700,400);
 //        XYPlot xyplot = (XYPlot) jfreechart.getPlot();
 //        xyplot.setForegroundAlpha(0.85F);
@@ -99,6 +100,41 @@ public class ImageUtility {
               
               Color newColor = new Color(red,green,blue);
               resultImage.setRGB(x,y,newColor.getRGB());
+           }
+        }
+		return resultImage;
+	}
+	
+	// apply ordered dithering to the image
+	// Warning: input should be grayscale otherwise only the blue will be affected
+	public static BufferedImage grayscalOrderedDither(BufferedImage image) {
+		Random random = new Random();
+		int n = 5;
+		int[][] ditherMatrix = new int[n][n];
+		for(int i=0;i<n;i++) {
+			for(int j=0;j<n;j++) {
+				ditherMatrix[i][j] = random.nextInt(255);
+			}
+		}
+		int width = image.getWidth();
+        int height = image.getHeight();
+        BufferedImage resultImage = new BufferedImage(width, height, image.getType());
+        
+        int i,j,grayValue;
+        Color c;
+        for(int x=0; x<width; x++){
+        	for(int y=0; y<height; y++){
+        		i = x % ditherMatrix.length;
+        		j = y % ditherMatrix.length;
+        		c = new Color(image.getRGB(x, y));
+        		grayValue = (int) (c.getBlue());
+        		
+        		if(grayValue > ditherMatrix[i][j]) {
+        			resultImage.setRGB(x,y,Color.WHITE.getRGB());
+        		}
+        		else{
+        			resultImage.setRGB(x,y,Color.BLACK.getRGB());
+        		}
            }
         }
 		return resultImage;

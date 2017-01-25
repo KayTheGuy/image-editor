@@ -8,6 +8,13 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.statistics.HistogramDataset;
 
+/**
+ * @author Kayhan Dehghani Mohammadi
+ * Spring 2017
+ * CMPT 365 Assignment 1
+ * Image Editor
+ */
+
 public class ImageUtility {
 	
 	//Returns the grayscale of the original image
@@ -106,7 +113,7 @@ public class ImageUtility {
 		int[][] ditherMatrix = new int[n][n];
 		for(int i=0;i<n;i++) {
 			for(int j=0;j<n;j++) {
-				ditherMatrix[i][j] = random.nextInt(250);
+				ditherMatrix[i][j] = random.nextInt(240)+10;
 			}
 		}
 		int width = image.getWidth();

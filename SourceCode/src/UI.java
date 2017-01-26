@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -51,7 +52,7 @@ public class UI extends JFrame implements ActionListener{
 		mainFrame = new JFrame("CMPT365 Image Editing");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
-		mainFrame.setSize(500, 300);
+		mainFrame.setSize(600, 400);
 		mainFrame.setLocationRelativeTo(null);
 		
 		//Panels
@@ -62,11 +63,11 @@ public class UI extends JFrame implements ActionListener{
 		
 		//Menu
 		menuBar = new JMenuBar();
-        menu = new JMenu("Menu");
+        menu = new JMenu("Window");
         fileMenu = new JMenu("File");
-        menuBar.add(menu);
         menuBar.add(fileMenu);
-        selectItem = new JMenuItem("Select Image");
+        menuBar.add(menu);
+        selectItem = new JMenuItem("Open File...");
         selectItem.addActionListener(this);
         exitItem = new JMenuItem("Exit");
         exitItem.addActionListener(this);
@@ -99,7 +100,7 @@ public class UI extends JFrame implements ActionListener{
 		editButtonsPanel.add(_dith);
 		
 		//TextArea
-		label = new JLabel("Welcome!");
+		label = new JLabel("<html><br>Welcome!</html>");
 		txtPanel.add(label);
 
 		
@@ -125,10 +126,15 @@ public class UI extends JFrame implements ActionListener{
         	
         	//Load images
         	try {
-    			//Should be loaded in advance
     			originalImg = ImageIO.read(new File(imageFilePath));
     			grayImg = ImageUtility.makeGrayScale(originalImg);
     			invertImg = ImageUtility.invertImage(grayImg);
+    			
+    			//show image attributes
+    			String filename = Paths.get(imageFilePath).getFileName().toString();
+    			String dimensions = String.valueOf(originalImg.getWidth()) + " x " + String.valueOf(originalImg.getHeight());
+    			label.setText("<html><br>File Name: " + filename + "<br>" + "Dimensions (Width x Height): " + dimensions + "</html>");
+    			
     		} catch (IOException e) {
     			e.printStackTrace();
     		}

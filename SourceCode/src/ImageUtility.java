@@ -110,10 +110,11 @@ public class ImageUtility {
 	public static BufferedImage grayscalOrderedDither(BufferedImage image) {
 		Random random = new Random();
 		int n = 5;
+
 		int[][] ditherMatrix = new int[n][n];
 		for(int i=0;i<n;i++) {
 			for(int j=0;j<n;j++) {
-				ditherMatrix[i][j] = random.nextInt(240)+10;
+				ditherMatrix[i][j] = random.nextInt(255);
 			}
 		}
 		int width = image.getWidth();

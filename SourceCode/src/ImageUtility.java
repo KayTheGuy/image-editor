@@ -20,21 +20,21 @@ public class ImageUtility {
 	//Returns the grayscale of the original image
 	public static BufferedImage makeGrayScale(BufferedImage image) {
 		int width = image.getWidth();
-        int height = image.getHeight();
-        BufferedImage resultImage = new BufferedImage(width, height, image.getType());
+        	int height = image.getHeight();
+        	BufferedImage resultImage = new BufferedImage(width, height, image.getType());
         
-        for(int y=0; y<height; y++){
-           for(int x=0; x<width; x++){
-              Color c = new Color(image.getRGB(x, y));
-              int red = (int)(c.getRed() * 0.299);
-              int green = (int)(c.getGreen() * 0.587);
-              int blue = (int)(c.getBlue() *0.114);
-              Color newColor = new Color(red+green+blue,
-              red+green+blue,red+green+blue);
-              resultImage.setRGB(x,y,newColor.getRGB());
-           }
-        }
-        return resultImage;
+		for(int y=0; y<height; y++){
+			for(int x=0; x<width; x++){
+			      Color c = new Color(image.getRGB(x, y));
+			      int red = (int)(c.getRed() * 0.299);
+			      int green = (int)(c.getGreen() * 0.587);
+			      int blue = (int)(c.getBlue() *0.114);
+			      Color newColor = new Color(red+green+blue,
+			      red+green+blue,red+green+blue);
+			      resultImage.setRGB(x,y,newColor.getRGB());
+			}
+		}
+		return resultImage;
 	}
 	
 
@@ -43,22 +43,22 @@ public class ImageUtility {
 	// Warning: for color images the histogram will only show the blue
 	public static BufferedImage makeGrayscaleHistogram(BufferedImage image) {
 		int width = image.getWidth();
-        int height = image.getHeight();
+        	int height = image.getHeight();
         
-        ArrayList<Integer> histFreq = new ArrayList<>();
-        double[] histFreqdouble = new double[width+height];
+        	ArrayList<Integer> histFreq = new ArrayList<>();
+        	double[] histFreqdouble = new double[width+height];
         		
-        Color c;
-        for(int y=0; y<height; y++){
-        	for(int x=0; x<width; x++){
-        		c = new Color(image.getRGB(x, y));
-        		histFreq.add(c.getBlue());
-        	}
-        } 
+        	Color c;
+		for(int y=0; y<height; y++){
+			for(int x=0; x<width; x++){
+				c = new Color(image.getRGB(x, y));
+				histFreq.add(c.getBlue());
+			}
+		} 
         
-        for(int i=0; i<width+height; i++) {
-        	histFreqdouble[i] = (double) histFreq.get(i);
-        }
+		for(int i=0; i<width+height; i++) {
+			histFreqdouble[i] = (double) histFreq.get(i);
+		}
 
 		HistogramDataset histogramdataset = new HistogramDataset();
 		histogramdataset.addSeries("Grayscale Histogram", histFreqdouble, 256);
@@ -69,39 +69,39 @@ public class ImageUtility {
 	// Returns the gamma corrected version of the image
 	public static BufferedImage applyGammaCorrection(BufferedImage image)  {
 		int width = image.getWidth();
-        int height = image.getHeight();
-        BufferedImage resultImage = new BufferedImage(width, height, image.getType());
-        double gamma_inversed = 1/2.2;
-        for(int y=0; y<height; y++){
-           for(int x=0; x<width; x++){
-              Color c = new Color(image.getRGB(x, y));
-              int red = (int) (255 * (Math.pow((double) c.getRed() / (double) 255, gamma_inversed)));
-              int green = (int) (255 * (Math.pow((double) c.getGreen() / (double) 255, gamma_inversed)));
-              int blue = (int) (255 * (Math.pow((double) c.getBlue() / (double) 255, gamma_inversed)));
-              
-              Color newColor = new Color(red,green,blue);
-              resultImage.setRGB(x,y,newColor.getRGB());
-           }
-        }
+		int height = image.getHeight();
+		BufferedImage resultImage = new BufferedImage(width, height, image.getType());
+		double gamma_inversed = 1/2.2;
+		for(int y=0; y<height; y++){
+			for(int x=0; x<width; x++){
+			      Color c = new Color(image.getRGB(x, y));
+			      int red = (int) (255 * (Math.pow((double) c.getRed() / (double) 255, gamma_inversed)));
+			      int green = (int) (255 * (Math.pow((double) c.getGreen() / (double) 255, gamma_inversed)));
+			      int blue = (int) (255 * (Math.pow((double) c.getBlue() / (double) 255, gamma_inversed)));
+
+			      Color newColor = new Color(red,green,blue);
+			      resultImage.setRGB(x,y,newColor.getRGB());
+			}
+		}
 		return resultImage;
 	}
 	
 	// invert the image
 	public static BufferedImage invertImage(BufferedImage image) {
 		int width = image.getWidth();
-        int height = image.getHeight();
-        BufferedImage resultImage = new BufferedImage(width, height, image.getType());
-        for(int y=0; y<height; y++){
-           for(int x=0; x<width; x++){
-              Color c = new Color(image.getRGB(x, y));
-              int red = (int) (255-c.getRed());
-              int green = (int) (255-c.getGreen());
-              int blue = (int) (255-c.getBlue());
-              
-              Color newColor = new Color(red,green,blue);
-              resultImage.setRGB(x,y,newColor.getRGB());
-           }
-        }
+		int height = image.getHeight();
+		BufferedImage resultImage = new BufferedImage(width, height, image.getType());
+		for(int y=0; y<height; y++){
+			for(int x=0; x<width; x++){
+			      Color c = new Color(image.getRGB(x, y));
+			      int red = (int) (255-c.getRed());
+			      int green = (int) (255-c.getGreen());
+			      int blue = (int) (255-c.getBlue());
+
+			      Color newColor = new Color(red,green,blue);
+			      resultImage.setRGB(x,y,newColor.getRGB());
+		   	}
+		}
 		return resultImage;
 	}
 	
@@ -118,26 +118,26 @@ public class ImageUtility {
 			}
 		}
 		int width = image.getWidth();
-        int height = image.getHeight();
-        BufferedImage resultImage = new BufferedImage(width, height, image.getType());
+		int height = image.getHeight();
+		BufferedImage resultImage = new BufferedImage(width, height, image.getType());
         
-        int i,j,grayValue;
-        Color c;
-        for(int x=0; x<width; x++){
-        	for(int y=0; y<height; y++){
-        		i = x % ditherMatrix.length;
-        		j = y % ditherMatrix.length;
-        		c = new Color(image.getRGB(x, y));
-        		grayValue = (int) (c.getBlue());
-        		
-        		if(grayValue > ditherMatrix[i][j]) {
-        			resultImage.setRGB(x,y,Color.WHITE.getRGB());
-        		}
-        		else{
-        			resultImage.setRGB(x,y,Color.BLACK.getRGB());
-        		}
-           }
-        }
+		int i,j,grayValue;
+		Color c;
+		for(int x=0; x<width; x++){
+			for(int y=0; y<height; y++){
+				i = x % ditherMatrix.length;
+				j = y % ditherMatrix.length;
+				c = new Color(image.getRGB(x, y));
+				grayValue = (int) (c.getBlue());
+
+				if(grayValue > ditherMatrix[i][j]) {
+					resultImage.setRGB(x,y,Color.WHITE.getRGB());
+				}
+				else{
+					resultImage.setRGB(x,y,Color.BLACK.getRGB());
+				}
+		   }
+		}
 		return resultImage;
 	}
 }

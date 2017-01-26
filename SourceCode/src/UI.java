@@ -37,7 +37,7 @@ public class UI extends JFrame implements ActionListener{
 	private static String imageFilePath;
 	private JButton _color, _gray, _grayHist, _gammaHist, _inv, _invHist, _dith;
 	JMenuBar menuBar;
-    JMenu menu, fileMenu;
+        JMenu menu, fileMenu;
 	JMenuItem selectItem, exitItem;
 	JLabel label;
 	
@@ -63,17 +63,17 @@ public class UI extends JFrame implements ActionListener{
 		
 		//Menu
 		menuBar = new JMenuBar();
-        menu = new JMenu("Window");
-        fileMenu = new JMenu("File");
-        menuBar.add(fileMenu);
-        menuBar.add(menu);
-        selectItem = new JMenuItem("Open File...");
-        selectItem.addActionListener(this);
-        exitItem = new JMenuItem("Exit");
-        exitItem.addActionListener(this);
-        fileMenu.add(selectItem);
-        menu.add(exitItem);
-        mainFrame.setJMenuBar(menuBar);
+		menu = new JMenu("Window");
+		fileMenu = new JMenu("File");
+		menuBar.add(fileMenu);
+		menuBar.add(menu);
+		selectItem = new JMenuItem("Open File...");
+		selectItem.addActionListener(this);
+		exitItem = new JMenuItem("Exit");
+		exitItem.addActionListener(this);
+		fileMenu.add(selectItem);
+		menu.add(exitItem);
+		mainFrame.setJMenuBar(menuBar);
 		
 		//Buttons
 		_color = new JButton("Color");
@@ -103,8 +103,6 @@ public class UI extends JFrame implements ActionListener{
 		label = new JLabel("<html><br>Welcome!</html>");
 		txtPanel.add(label);
 
-		
-
 		editButtonsPanel.setVisible(true);
 		txtPanel.setVisible(true);
 		mainFrame.setVisible(true);
@@ -120,20 +118,20 @@ public class UI extends JFrame implements ActionListener{
 		int result = fc.showOpenDialog(dialog);
 		
 		if (result == JFileChooser.APPROVE_OPTION) { 
-        	File file = fc.getSelectedFile();
-        	imageFilePath = file.getAbsolutePath();
-        	//TODO: complete logic
+        		File file = fc.getSelectedFile();
+        		imageFilePath = file.getAbsolutePath();
+        		//TODO: complete logic
         	
-        	//Load images
-        	try {
-    			originalImg = ImageIO.read(new File(imageFilePath));
-    			grayImg = ImageUtility.makeGrayScale(originalImg);
-    			invertImg = ImageUtility.invertImage(grayImg);
-    			
-    			//show image attributes
-    			String filename = Paths.get(imageFilePath).getFileName().toString();
-    			String dimensions = String.valueOf(originalImg.getWidth()) + " x " + String.valueOf(originalImg.getHeight());
-    			label.setText("<html><br>File Name: " + filename + "<br>" + "Dimensions (Width x Height): " + dimensions + "</html>");
+        		//Load images
+        		try {
+				originalImg = ImageIO.read(new File(imageFilePath));
+				grayImg = ImageUtility.makeGrayScale(originalImg);
+				invertImg = ImageUtility.invertImage(grayImg);
+
+				//show image attributes
+				String filename = Paths.get(imageFilePath).getFileName().toString();
+				String dimensions = String.valueOf(originalImg.getWidth()) + " x " + String.valueOf(originalImg.getHeight());
+				label.setText("<html><br>File Name: " + filename + "<br>" + "Dimensions (Width x Height): " + dimensions + "</html>");
     			
     		} catch (IOException e) {
     			e.printStackTrace();
@@ -145,8 +143,8 @@ public class UI extends JFrame implements ActionListener{
 	private void viewImage(BufferedImage image, String header) {
 		ImageIcon icon = new ImageIcon(image);
 		JLabel label = new JLabel(icon);
-        label.setAutoscrolls(true);
-        JOptionPane.showMessageDialog(null, label,header, JOptionPane.PLAIN_MESSAGE);
+       		label.setAutoscrolls(true);
+        	JOptionPane.showMessageDialog(null, label,header, JOptionPane.PLAIN_MESSAGE);
 	}
 
 	@Override
@@ -161,27 +159,27 @@ public class UI extends JFrame implements ActionListener{
 			viewImage(originalImg, "Original Image");
 		}
 		else if (e.getSource()==_gray) {
-	        viewImage(grayImg, "Grayscale Image");
+	        	viewImage(grayImg, "Grayscale Image");
 		}
 		else if (e.getSource()==_grayHist) {
 			BufferedImage histogramImage = ImageUtility.makeGrayscaleHistogram(grayImg);
-	        viewImage(histogramImage, "Grayscale Histogram");
+	        	viewImage(histogramImage, "Grayscale Histogram");
 		}
 		else if (e.getSource()==_gammaHist) {
 			BufferedImage gammaCorrected = ImageUtility.applyGammaCorrection(grayImg);
-	        BufferedImage gammaHistogramImage = ImageUtility.makeGrayscaleHistogram(gammaCorrected);
-	        viewImage(gammaHistogramImage, "Gamma Corrected Histogram");
+	        	BufferedImage gammaHistogramImage = ImageUtility.makeGrayscaleHistogram(gammaCorrected);
+	        	viewImage(gammaHistogramImage, "Gamma Corrected Histogram");
 		}
 		else if (e.getSource()==_inv) {
-	        viewImage(invertImg, "Inverted Image");
+	        	viewImage(invertImg, "Inverted Image");
 		}
 		else if (e.getSource()==_invHist) {
 			BufferedImage invertHistogramImage = ImageUtility.makeGrayscaleHistogram(invertImg);
-	        viewImage(invertHistogramImage, "Inverted Histogram");
+	        	viewImage(invertHistogramImage, "Inverted Histogram");
 		}
 		else if (e.getSource()==_dith) {
 			BufferedImage ditheredImg = ImageUtility.grayscalOrderedDither(grayImg);
-	        viewImage(ditheredImg, "Ordered-Dithered Image");
+	        	viewImage(ditheredImg, "Ordered-Dithered Image");
 		}
 	}
 }

@@ -1,5 +1,5 @@
 # ImageEditor
-# Multimedia Systems (CMPT 365) - Assignment 1
+# Multimedia Systems 
 
 A Java application that does the followings:
   1. Display the original color image
